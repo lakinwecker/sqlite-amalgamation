@@ -59,6 +59,16 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC # inject user's options
     >
     )
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wno-everything)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_compile_options(${PROJECT_NAME} PRIVATE -w)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    target_compile_options(${PROJECT_NAME} PRIVATE /W0)
+endif()
+
+
 # platform/compiler specific settings
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
     find_package(Threads REQUIRED)
